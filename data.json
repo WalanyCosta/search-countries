@@ -1,4 +1,5 @@
-[
+{
+"countries":[
   {
     "name": "Afghanistan",
     "topLevelDomain": [".af"],
@@ -16822,3 +16823,4 @@
     "independent": true
   }
 ]
+}

@@ -1,0 +1,17 @@
+@import './color-styles.scss';
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 100%;
+}
+
+body{
+    background-color: $light-gray;
+    font-family: 'Nunito Sans', sans-serif;
+}

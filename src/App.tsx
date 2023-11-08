@@ -1,6 +1,9 @@
+import Home from './pages/home/index'
+import './styles/global-styles.scss'
+
 function App() {
   return (
-   <div>Hello, react vite</div> 
+   <Home />
   )
 }
 

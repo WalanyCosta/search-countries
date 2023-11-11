@@ -1,7 +1,50 @@
 import { MagnifyingGlass, Moon } from '@phosphor-icons/react'
+import { useState, useEffect } from 'react'
 import styles from './home.module.scss'
 
+type Country = {
+  numericCode: string,
+  name: string,
+  flags: {
+    png: string
+  },
+  population: string,
+  region: string,
+  capital: string,
+}
+
+
 function Home() {
+  const [filterCountry, setFilterCountry] = useState<Country[]>([])
+  const [countries, setCountries] = useState<Country[]>([])
+  const [searchCountry, setsearchCountry] = useState('')
+  const [region, setRegion] = useState('')
+  
+  useEffect(()=> {
+    fetch('http://localhost:3000/countries')
+      .then((data)=> data.json())
+      .then((data)=> {
+        setCountries(data)
+        setFilterCountry(data)
+      })
+  },[])
+
+  useEffect(()=> {
+    handleFindByCountryAndRegion()
+  },[region, searchCountry])
+
+
+  function handleFindByCountryAndRegion (){
+    const searchLowerCase = searchCountry.toLowerCase()
+    let regionLowerCase = region.toLowerCase()
+
+    if(regionLowerCase === 'filter by region') regionLowerCase = ''
+
+    const newCountries = filterCountry.filter(u => u.name.toLowerCase().startsWith(searchLowerCase)
+    && u.region.toLocaleLowerCase().startsWith(regionLowerCase))
+    setCountries(newCountries)
+  }
+
   return (
     <div className={styles.homeContainer}>
       <nav>
@@ -18,71 +61,45 @@ function Home() {
             className='searchIcon'
           />
 
-          <input 
+          <input
             type="search"
             id="search"
-            placeholder='Search for a country' 
+            placeholder='Search for a country'
+            onChange={(e)=> setsearchCountry(e.target.value)} 
           />
         </label>
 
-        <select>
+        <select onChange={(e)=> setRegion(e.target.value)}>
           <option selected>Filter by Region</option>
-          <option value="af">Africa</option>
-          <option value="am">America</option>
-          <option value="as">Asia</option>
-          <option value="eu">Europe</option>
-          <option value="oc">Oceania</option>
+          <option >Africa</option>
+          <option >America</option>
+          <option >Asia</option>
+          <option >Europe</option>
+          <option >Oceania</option>
         </select>
       </div>
 
       <div className={styles.countryContainer}>
-        <div className={styles.country}>
-          <img src="https://flagcdn.com/w320/de.png"/>
-          <div className={styles.infoCountry}>
-            <h3>Germany</h3>
-            <ul>
-              <li><span>Population:</span>81.770.900</li>
-              <li><span>Region:</span>Europe</li>
-              <li><span>capital:</span>Berlin</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.country}>
-          <img src="https://flagcdn.com/w320/de.png"/>
-          <div className={styles.infoCountry}>
-            <h3>Germany</h3>
-            <ul>
-              <li><span>Population:</span>81.770.900</li>
-              <li><span>Region:</span>Europe</li>
-              <li><span>capital:</span>Berlin</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.country}>
-          <img src="https://flagcdn.com/w320/de.png"/>
-          <div className={styles.infoCountry}>
-            <h3>Germany</h3>
-            <ul>
-              <li><span>Population:</span>81.770.900</li>
-              <li><span>Region:</span>Europe</li>
-              <li><span>capital:</span>Berlin</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className={styles.country}>
-          <img src="https://flagcdn.com/w320/de.png"/>
-          <div className={styles.infoCountry}>
-            <h3>Germany</h3>
-            <ul>
-              <li><span>Population:</span>81.770.900</li>
-              <li><span>Region:</span>Europe</li>
-              <li><span>capital:</span>Berlin</li>
-            </ul>
-          </div>
-        </div>
+        {
+          countries.length !== 0 ? countries.map(country => (
+            <div className={styles.country} key={country.numericCode}>
+              <img src={country.flags.png} />
+              <div className={styles.infoCountry}>
+                <h3>{country.name}</h3>
+                <ul>
+                  <li><span>Population:</span>{country.population}</li>
+                  <li><span>Region:</span>{country.region}</li>
+                  <li><span>capital:</span>{country.capital}</li>
+                </ul>
+              </div>
+            </div>
+          )) : (
+            <div className={styles.notFoundMessage}>
+              Country não encontrado
+            </div>
+          )
+        }
+        
       </div>
     </div>
   )

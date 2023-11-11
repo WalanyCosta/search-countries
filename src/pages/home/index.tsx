@@ -1,6 +1,7 @@
 import { MagnifyingGlass, Moon } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import styles from './home.module.scss'
+import { verifyStartsWithSameLetter } from '../../utils/verify-starts-with-same-letter'
 
 type Country = {
   numericCode: string,
@@ -17,7 +18,7 @@ type Country = {
 function Home() {
   const [filterCountry, setFilterCountry] = useState<Country[]>([])
   const [countries, setCountries] = useState<Country[]>([])
-  const [searchCountry, setsearchCountry] = useState('')
+  const [searchCountry, setSearchCountry] = useState('')
   const [region, setRegion] = useState('')
   
   useEffect(()=> {
@@ -30,20 +31,12 @@ function Home() {
   },[])
 
   useEffect(()=> {
-    handleFindByCountryAndRegion()
-  },[region, searchCountry])
-
-
-  function handleFindByCountryAndRegion (){
-    const searchLowerCase = searchCountry.toLowerCase()
-    let regionLowerCase = region.toLowerCase()
-
-    if(regionLowerCase === 'filter by region') regionLowerCase = ''
-
-    const newCountries = filterCountry.filter(u => u.name.toLowerCase().startsWith(searchLowerCase)
-    && u.region.toLocaleLowerCase().startsWith(regionLowerCase))
+    const newCountries = filterCountry.filter(country => 
+      verifyStartsWithSameLetter(country.name, searchCountry)
+      && verifyStartsWithSameLetter(country.region, region)
+    )
     setCountries(newCountries)
-  }
+  },[region, searchCountry])
 
   return (
     <div className={styles.homeContainer}>
@@ -65,17 +58,17 @@ function Home() {
             type="search"
             id="search"
             placeholder='Search for a country'
-            onChange={(e)=> setsearchCountry(e.target.value)} 
+            onChange={(e)=> setSearchCountry(e.target.value)} 
           />
         </label>
 
         <select onChange={(e)=> setRegion(e.target.value)}>
-          <option selected>Filter by Region</option>
-          <option >Africa</option>
-          <option >America</option>
-          <option >Asia</option>
-          <option >Europe</option>
-          <option >Oceania</option>
+          <option value='' selected>Filter by Region</option>
+          <option>Africa</option>
+          <option>America</option>
+          <option>Asia</option>
+          <option>Europe</option>
+          <option>Oceania</option>
         </select>
       </div>
 
@@ -99,7 +92,6 @@ function Home() {
             </div>
           )
         }
-        
       </div>
     </div>
   )

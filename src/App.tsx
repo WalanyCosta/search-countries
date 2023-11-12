@@ -1,3 +1,4 @@
+import DetailsCountry from './pages/details-country';
 import Home from './pages/home/index'
 import './styles/global-styles.scss'
 import {
@@ -10,6 +11,10 @@ const routes = createBrowserRouter([
     path: '/',
     element: <Home />
   },
+  {
+    path: '/details/:country_id',
+    element: <DetailsCountry />
+  }
 ])
 
 function App() {

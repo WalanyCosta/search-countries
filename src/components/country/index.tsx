@@ -1,13 +1,26 @@
-import { CountryProps } from '../../pages/home'
+import { useNavigate } from 'react-router-dom'
+import { CountryModel } from '../../model/country-model'
 import styles from './country.module.scss'
 
 type Props = {
-  country: CountryProps
+  country: CountryModel
 }
 
+
 function Country({country}: Props) {
+  const navigate = useNavigate()
+
+  function handleNavigateToDetails (numericCode: string){
+    navigate(`details/${numericCode}`)
+  }
+  
+
   return (
-    <div className={styles.country} key={country.numericCode}>
+    <div 
+      className={styles.country} 
+      key={country.numericCode}
+      onClick={()=> handleNavigateToDetails(country.numericCode)}
+    >
     <img src={country.flags.png} />
     <div className={styles.infoCountry}>
       <h3>{country.name}</h3>

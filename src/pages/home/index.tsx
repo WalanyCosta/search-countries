@@ -20,6 +20,7 @@ function Home() {
   const [countries, setCountries] = useState<Country[]>([])
   const [searchCountry, setSearchCountry] = useState('')
   const [region, setRegion] = useState('')
+  const [messageError, setMessageError] = useState('')
   
   useEffect(()=> {
     fetch('http://localhost:3000/countries')
@@ -28,6 +29,9 @@ function Home() {
         setCountries(data)
         setFilterCountry(data)
       })
+      .catch((error) => {
+        setMessageError(error)}
+      )
   },[])
 
   useEffect(()=> {
@@ -74,6 +78,13 @@ function Home() {
 
       <div className={styles.countryContainer}>
         {
+          messageError ? 
+          (
+            <div className={styles.messageError}>
+              <p>Ocorreu um erro no servidor. Por favor tente Novamente</p>
+              <button type='button' onClick={()=> window.location.reload()}>Atualizar</button>
+            </div>
+          ):
           countries.length !== 0 ? countries.map(country => (
             <div className={styles.country} key={country.numericCode}>
               <img src={country.flags.png} />

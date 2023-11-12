@@ -6,21 +6,11 @@ import NotFound from '../../components/not-found'
 import Filter from '../../components/filter'
 import Error from '../../components/error'
 import Header from '../../components/header'
-
-export type CountryProps = {
-  numericCode: string,
-  name: string,
-  flags: {
-    png: string
-  },
-  population: string,
-  region: string,
-  capital: string,
-}
+import { CountryModel } from '../../model/country-model'
 
 export type StateProps = {
-  filterCountry: CountryProps[];
-  countries: CountryProps[];
+  filterCountry: CountryModel[];
+  countries: CountryModel[];
   searchCountry: string;
   region: string,
   messageError: ''
@@ -71,8 +61,7 @@ function Home() {
           state.messageError ? 
             <Error />
           : (
-            state.countries.length !== 0 ? 
-            state.countries.map(data => <Country country={data}/>) 
+            state.countries.length !== 0 ? state.countries.map(data => <Country country={data}/>) 
             : <NotFound />
           )
         }

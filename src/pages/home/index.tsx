@@ -1,9 +1,13 @@
-import { MagnifyingGlass, Moon } from '@phosphor-icons/react'
 import { useState, useEffect } from 'react'
 import styles from './home.module.scss'
 import { verifyStartsWithSameLetter } from '../../utils/verify-starts-with-same-letter'
+import Country from '../../components/country'
+import NotFound from '../../components/not-found'
+import Filter from '../../components/filter'
+import Error from '../../components/error'
+import Header from '../../components/header'
 
-type Country = {
+export type CountryProps = {
   numericCode: string,
   name: string,
   flags: {
@@ -14,93 +18,62 @@ type Country = {
   capital: string,
 }
 
+export type StateProps = {
+  filterCountry: CountryProps[];
+  countries: CountryProps[];
+  searchCountry: string;
+  region: string,
+  messageError: ''
+}
 
 function Home() {
-  const [filterCountry, setFilterCountry] = useState<Country[]>([])
-  const [countries, setCountries] = useState<Country[]>([])
-  const [searchCountry, setSearchCountry] = useState('')
-  const [region, setRegion] = useState('')
-  const [messageError, setMessageError] = useState('')
+  const [state, setState] = useState<StateProps>({
+    filterCountry: [],
+    countries: [],
+    searchCountry: '',
+    region: '',
+    messageError: ''
+  })
   
   useEffect(()=> {
     fetch('http://localhost:3000/countries')
       .then((data)=> data.json())
       .then((data)=> {
-        setCountries(data)
-        setFilterCountry(data)
+        setState({ ...state, countries: data, filterCountry: data })
       })
       .catch((error) => {
-        setMessageError(error)}
+        setState({...state, messageError: error})}
       )
   },[])
 
   useEffect(()=> {
-    const newCountries = filterCountry.filter(country => 
-      verifyStartsWithSameLetter(country.name, searchCountry)
-      && verifyStartsWithSameLetter(country.region, region)
+    const newCountries = state.filterCountry.filter(country => 
+      verifyStartsWithSameLetter(country.name, state.searchCountry)
+      && verifyStartsWithSameLetter(country.region, state.region)
     )
-    setCountries(newCountries)
-  },[region, searchCountry])
+    setState({...state, countries: newCountries})
+  },[
+    state.region, 
+    state.searchCountry
+  ])
 
   return (
     <div className={styles.homeContainer}>
-      <nav>
-        <h2>Where is the world</h2>
-        <button type='button'>
-          <Moon className={styles.iconMoon} size={24}/>
-          Dark Mode
-        </button>
-      </nav>
+     <Header />
 
-      <div className={styles.filterContainer}>
-        <label htmlFor="search">
-         <MagnifyingGlass 
-            className='searchIcon'
-          />
-
-          <input
-            type="search"
-            id="search"
-            placeholder='Search for a country'
-            onChange={(e)=> setSearchCountry(e.target.value)} 
-          />
-        </label>
-
-        <select onChange={(e)=> setRegion(e.target.value)}>
-          <option value='' selected>Filter by Region</option>
-          <option>Africa</option>
-          <option>America</option>
-          <option>Asia</option>
-          <option>Europe</option>
-          <option>Oceania</option>
-        </select>
-      </div>
+     <Filter
+        state={state}
+        setState={setState} 
+     />
 
       <div className={styles.countryContainer}>
         {
-          messageError ? 
-          (
-            <div className={styles.messageError}>
-              <p>Ocorreu um erro no servidor. Por favor tente Novamente</p>
-              <button type='button' onClick={()=> window.location.reload()}>Atualizar</button>
-            </div>
-          ):
-          countries.length !== 0 ? countries.map(country => (
-            <div className={styles.country} key={country.numericCode}>
-              <img src={country.flags.png} />
-              <div className={styles.infoCountry}>
-                <h3>{country.name}</h3>
-                <ul>
-                  <li><span>Population:</span>{country.population}</li>
-                  <li><span>Region:</span>{country.region}</li>
-                  <li><span>capital:</span>{country.capital}</li>
-                </ul>
-              </div>
-            </div>
-          )) : (
-            <div className={styles.notFoundMessage}>
-              Country não encontrado
-            </div>
+          state.messageError ? 
+            <Error />
+          : (
+            state.countries.length !== 0 ? 
+            state.countries.map(data => <Country country={data}/>) 
+            : <NotFound />
           )
         }
       </div>

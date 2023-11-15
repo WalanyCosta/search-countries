@@ -12,7 +12,7 @@ const routes = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/details/:country_id',
+    path: '/details/:numericCode',
     element: <DetailsCountry />
   }
 ])

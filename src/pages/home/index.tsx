@@ -61,7 +61,9 @@ function Home() {
           state.messageError ? 
             <Error />
           : (
-            state.countries.length !== 0 ? state.countries.map(data => <Country country={data}/>) 
+            state.countries.length !== 0 ? state.countries.map(data => 
+            <Country key={data.numericCode} country={data}/>
+            ) 
             : <NotFound />
           )
         }

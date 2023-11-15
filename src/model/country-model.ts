@@ -7,4 +7,10 @@ export type CountryModel = {
     population: string,
     region: string,
     capital: string,
-  }
+    nativeName: string,
+    subRegion: string,
+    topLevelDomain: string,
+    currencies: Array<{name: string}>,
+    languages: Array<{name: string}>,
+    borders: Array<string>
+}

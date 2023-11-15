@@ -1,63 +1,101 @@
+import { useEffect, useState } from 'react'
 import Header from '../../components/header'
+import { ArrowLeft } from '@phosphor-icons/react'
 import styles from './details-country.module.scss'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { CountryModel } from '../../model/country-model'
 
 function DetailsCountry() {
+    const [country, setCountry] = useState<CountryModel | null>(null)
     const params = useParams()
+    let comma: string
+
+    useEffect(()=> {
+      fetch(`http://localhost:3000/countries?numericCode=${params.numericCode}`)
+      .then(data => data.json())
+      .then(data => {
+        setCountry(data[0])
+      }).catch(error=> console.log(error))     
+    }, [])
 
     return (
     <>
     <Header />
       
-    <a href='#'>Back</a>
+    <Link to='/'>
+      <ArrowLeft size={24} weight="thin" />
+      Back
+    </Link>
 
     <div className={styles.detailsContainer}>
-        <img src="https://flagcdn.com/w320/be.png" />
+        <img src={country?.flags.png} />
         <div className={styles.detailsCountry}>
-          <h3>Belgium</h3>
+          <h3>{country?.name}</h3>
           <div className={styles.infoCountry}>
               <ul>
                 <li>
                   <strong>Native Name:</strong>
-                  <p>Belgie</p>
+                  <p>{country?.nativeName}</p>
                 </li>
                 <li>
-                  <strong>poulation:</strong>
-                  <p>Belgie</p>
+                  <strong>population:</strong>
+                  <p>{country?.population}</p>
                 </li>
                 <li>
                   <strong>Region:</strong>
-                  <p>Europe</p>
+                  <p>{country?.region}</p>
                 </li>
                 <li>
                   <strong>sub region:</strong>
-                  <p>Western Europe</p>
+                  <p>{country?.subRegion}</p>
                 </li>
                 <li>
                   <strong>capital:</strong>
-                  <p>Brussels</p>
+                  <p>{country?.capital}</p>
                 </li>
               </ul>
               <ul>
                 <li>
                   <strong>top level:</strong>
-                  <p>Belgie</p>
+                  <p>{country?.topLevelDomain}</p>
                 </li>
                 <li>
                   <strong>currencies:</strong>
-                  <p>Euro</p>
+                  
+                  {country?.currencies && country?.currencies.map(currency => {
+                    comma = country.currencies.indexOf(currency) !== 0 ? ',' : ''
+                    return (
+                      <>
+                      {comma}
+                      <p key={currency.name}>{currency.name}</p>
+                      </>
+                    )
+                  })}
+                  
                 </li>
                 <li>
                   <strong>Languages:</strong>
-                  <p>Dutch, french, german</p>
+                  {country?.languages && country?.languages.map(language => {
+                    comma = country.languages.indexOf(language) !== 0 ? ',' : ''
+                    return (
+                      <>
+                        {comma}
+                        <p key={language.name}>{language.name}</p>
+                      </>
+                      )
+                  })}
                 </li>
               </ul>
           </div>
           <div className={styles.borderCountries}>
             <strong>Border Countries:</strong>
-            <p>france</p>
-            <p>Germany</p>
-            <p>Netherlands</p>
+            <>
+                  {country?.borders && country?.borders.map(borderCountry => (
+                      <p key={borderCountry}>
+                        {borderCountry}
+                      </p>
+                  ))}
+            </>
           </div>
         </div>
     </div>

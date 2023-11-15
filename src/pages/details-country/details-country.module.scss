@@ -1,7 +1,11 @@
 @import '../../styles/global-styles.scss';
 
 a{
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    
     margin-left: 127px;
     margin-bottom: 24px;
     padding: 10px 12px;
@@ -41,7 +45,6 @@ a{
                 li{
                     margin-bottom: 16px;
                     display: flex;
-                    gap: 4px;
 
                     strong{
                         font-weight: 600;
@@ -50,6 +53,7 @@ a{
 
                     p{
                         text-transform: capitalize;
+                        margin-left: 4px;
                     }
                 }
 
@@ -68,14 +72,13 @@ a{
                 font-weight: 600;
             }
             & > p{
-                width: 125px;
-                margin-right: 8px;
+                width: 100px;
+                margin-right: 16px;
                 padding: 8px;
                 border-radius: 4px;
                 background-color: $white;
                 text-transform: capitalize;
                 box-shadow: 1px 1px 2px 1px #00000062;
-                cursor: pointer;
                 border: none;
                 text-align: center;
             }

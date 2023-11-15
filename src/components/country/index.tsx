@@ -13,12 +13,10 @@ function Country({country}: Props) {
   function handleNavigateToDetails (numericCode: string){
     navigate(`details/${numericCode}`)
   }
-  
 
   return (
     <div 
       className={styles.country} 
-      key={country.numericCode}
       onClick={()=> handleNavigateToDetails(country.numericCode)}
     >
     <img src={country.flags.png} />

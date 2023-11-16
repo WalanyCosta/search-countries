@@ -10,14 +10,14 @@ type Props = {
 function Country({country}: Props) {
   const navigate = useNavigate()
 
-  function handleNavigateToDetails (numericCode: string){
-    navigate(`details/${numericCode}`)
+  function handleNavigateToDetails (alpha3Code: string){
+    navigate(`details/${alpha3Code}`)
   }
 
   return (
     <div 
       className={styles.country} 
-      onClick={()=> handleNavigateToDetails(country.numericCode)}
+      onClick={()=> handleNavigateToDetails(country.alpha3Code)}
     >
     <img src={country.flags.png} />
     <div className={styles.infoCountry}>

@@ -12,7 +12,7 @@ const routes = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/details/:numericCode',
+    path: '/details/:alpha3Code',
     element: <DetailsCountry />
   }
 ])

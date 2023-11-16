@@ -11,7 +11,7 @@ function DetailsCountry() {
     let comma: string
 
     useEffect(()=> {
-      fetch(`http://localhost:3000/countries?numericCode=${params.numericCode}`)
+      fetch(`http://localhost:3000/countries?alpha3Code=${params.alpha3Code}`)
       .then(data => data.json())
       .then(data => {
         setCountry(data[0])

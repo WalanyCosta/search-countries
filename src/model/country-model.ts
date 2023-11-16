@@ -1,5 +1,5 @@
 export type CountryModel = {
-    numericCode: string,
+    alpha3Code: string,
     name: string,
     flags: {
       png: string

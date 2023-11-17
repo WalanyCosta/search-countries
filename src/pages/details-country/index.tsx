@@ -6,17 +6,18 @@ import { Link, useParams } from 'react-router-dom'
 import { CountryModel } from '../../model/country-model'
 
 function DetailsCountry() {
-    const [country, setCountry] = useState<CountryModel | null>(null)
-    const params = useParams()
     let comma: string
+    const params = useParams()
+    const [country, setCountry] = useState<CountryModel | null>(null)
+    const [border, setBorder] = useState<string | null>(null)
 
     useEffect(()=> {
-      fetch(`http://localhost:3000/countries?alpha3Code=${params.alpha3Code}`)
+      fetch(`http://localhost:3000/countries?alpha3Code=${border ? border : params.alpha3Code}`)
       .then(data => data.json())
       .then(data => {
         setCountry(data[0])
-      }).catch(error=> console.log(error))     
-    }, [])
+      }).catch(error=> console.log(error))
+    }, [border])
 
     return (
     <>
@@ -89,13 +90,13 @@ function DetailsCountry() {
           </div>
           <div className={styles.borderCountries}>
             <strong>Border Countries:</strong>
-            <>
+            <div>
                   {country?.borders && country?.borders.map(borderCountry => (
-                      <p key={borderCountry}>
+                      <button key={borderCountry} onClick={()=> setBorder(borderCountry)}>
                         {borderCountry}
-                      </p>
+                      </button>
                   ))}
-            </>
+            </div>
           </div>
         </div>
     </div>

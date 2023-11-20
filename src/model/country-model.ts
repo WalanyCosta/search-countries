@@ -4,7 +4,7 @@ export type CountryModel = {
     flags: {
       png: string
     },
-    population: string,
+    population: number,
     region: string,
     capital: string,
     nativeName: string,

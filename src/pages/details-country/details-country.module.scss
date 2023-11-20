@@ -3,13 +3,12 @@
 a{
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
+    justify-content: space-evenly;
     
-    margin-left: 127px;
+    max-width: 100px;
+    margin-left: 11%;
     margin-bottom: 24px;
-    padding: 10px 12px;
-    width: 124px;
+    padding: 10px;
     border-radius: 4px;
     box-shadow: 1px 1px 2px 1px #00000062;
     text-align: center;
@@ -18,77 +17,14 @@ a{
     background-color: $white;
 }
 
-.detailsContainer{
-    padding: 0 64px;
-    display: flex;
-    justify-content: space-around;
-    gap: 16px; 
-
-    img{
-        width: 35%;
-        border-radius: 4px;
+@media (max-width: 768px) {
+    a{
+        margin-left: 11%;
     }
+}
 
-    .detailsCountry{
-        h3{
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 24px;
-        }
-
-        .infoCountry{
-            display: flex;
-            margin-bottom: 16px;
-
-            ul {
-                
-                li{
-                    margin-bottom: 16px;
-                    display: flex;
-
-                    strong{
-                        font-weight: 600;
-                        text-transform: capitalize;
-                    }
-
-                    p{
-                        text-transform: capitalize;
-                        margin-left: 4px;
-                    }
-                }
-
-                & + ul{
-                    margin-left: 64px;
-                }
-            }
-        }
-
-        .borderCountries{
-            display: flex;
-            align-items: flex-start;
-            strong{
-                margin-right: 12px;
-                font-weight: 600;
-            }
-            div{
-                width: 600px;
-                display: flex;
-                gap: 8px;
-                flex-wrap: wrap;
-                button{
-                    width: 100px;
-                    margin-right: 16px;
-                    padding: 8px;
-                    border-radius: 4px;
-                    background-color: $white;
-                    text-transform: capitalize;
-                    box-shadow: 1px 1px 2px 1px #00000062;
-                    border: none;
-                    text-align: center;
-                    cursor: pointer;
-                }
-            }
-            
-        }
-    }  
+@media (max-width: 425px) {
+    a{
+        margin-left: 5%;
+    }
 }

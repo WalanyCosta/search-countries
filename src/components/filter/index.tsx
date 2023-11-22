@@ -1,6 +1,7 @@
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import styles from './filter.module.scss'
 import { StateProps } from '../../pages/home';
+import SelectComponents from '../select';
 
 type Props = {
     state: StateProps
@@ -25,16 +26,12 @@ function Filter({state, setState}: Props) {
         />
         </label>
 
-        <select onChange={(e)=> setState({...state, region:e.target.value})}>
-            <option value='' selected>Filter by Region</option>
-            <option>Africa</option>
-            <option>America</option>
-            <option>Asia</option>
-            <option>Europe</option>
-            <option>Oceania</option>
-        </select>
+            <SelectComponents 
+                onValueChange={(value)=> setState({...state, region: value.toString()})}
+            />    
   </div>
   )
+  
 }
 
 export default Filter

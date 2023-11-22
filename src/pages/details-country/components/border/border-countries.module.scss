@@ -38,10 +38,12 @@
 @media (max-width: 412px) {
     .borderCountries{
         flex-direction: column;
-        gap: 16px 0px;
+        gap: 16px 0;
 
         div{
+            width: 100%;
             margin-left: 0.75%;
+            gap: 2px;
         }
     }
 }

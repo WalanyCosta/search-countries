@@ -6,7 +6,7 @@ a{
     justify-content: space-evenly;
     
     max-width: 100px;
-    margin-left: 11%;
+    margin-left: 6%;
     margin-bottom: 24px;
     padding: 10px;
     border-radius: 4px;
@@ -15,6 +15,12 @@ a{
     text-decoration: none;
     color: $dark-blueText;
     background-color: $white;
+}
+
+@media (max-width: 1198px) {
+    a{
+        margin-left:3%;
+    }
 }
 
 @media (max-width: 768px) {

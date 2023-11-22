@@ -57,16 +57,16 @@ function Home() {
      />
 
       <div className={styles.countryContainer}>
-        {
-          state.messageError ? 
-            <Error />
-          : (
-            state.countries.length !== 0 ? state.countries.map(data => 
-            <Country key={data.numericCode} country={data}/>
-            ) 
-            : <NotFound />
-          )
-        }
+          {
+            state.messageError ? 
+              <Error />
+            : (
+              state.countries.length !== 0 ? state.countries.map(data => 
+              <Country key={data.alpha3Code} country={data}/>
+              ) 
+              : <NotFound />
+            )
+          }
       </div>
     </div>
   )

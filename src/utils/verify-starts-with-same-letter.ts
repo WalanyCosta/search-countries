@@ -4,3 +4,5 @@ export function verifyStartsWithSameLetter(value:string, search: string): boolea
 
     return valueLowerCase.toLowerCase().startsWith(searchLowerCase)
 }
+
+

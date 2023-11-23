@@ -1,6 +1,7 @@
 import styles from './detail.module.scss'
 import { CountryModel } from '../../../../model/country-model'
 import BorderCountries from '../border'
+import { getValuePopulationWithComma } from '../../../../utils/get-value-population'
 
 type Props = {
     country: CountryModel | null
@@ -23,7 +24,7 @@ function Detail({country, setBorder}: Props) {
             </li>
             <li>
               <strong>population:</strong>
-              <p>{country?.population}</p>
+              <p>{getValuePopulationWithComma(country?.population)}</p>
             </li>
             <li>
               <strong>Region:</strong>

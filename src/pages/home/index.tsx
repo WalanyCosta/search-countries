@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import styles from './home.module.scss'
-import { verifyStartsWithSameLetter } from '../../utils/verify-starts-with-same-letter'
 import Country from '../../components/country'
 import NotFound from '../../components/not-found'
 import Filter from '../../components/filter'
@@ -9,7 +8,6 @@ import Header from '../../components/header'
 import { CountryModel } from '../../model/country-model'
 
 export type StateProps = {
-  filterCountry: CountryModel[];
   countries: CountryModel[];
   searchCountry: string;
   region: string,
@@ -18,30 +16,49 @@ export type StateProps = {
 
 function Home() {
   const [state, setState] = useState<StateProps>({
-    filterCountry: [],
     countries: [],
     searchCountry: '',
     region: '',
     messageError: ''
   })
+
+  function findCountriesByAnythings(url: string){
+    fetch(url)
+    .then((data)=> data.json())
+    .then((data)=> {
+      const newcontries: CountryModel[] = data?.map(country =>{
+          return {
+            ...country,
+            name: country.name.common,
+            region: country.continents+'',
+            flags: country.flags
+          }   
+      })
+      setState({ ...state, countries: newcontries})
+    })
+    .catch((error) => {
+      setState({...state, messageError: error})}
+    )
+  }
+
+  function findCountriesAll(): void{
+    findCountriesByAnythings('https://restcountries.com/v3.1/all')
+  }
   
   useEffect(()=> {
-    fetch('http://localhost:3000/countries')
-      .then((data)=> data.json())
-      .then((data)=> {
-        setState({ ...state, countries: data, filterCountry: data })
-      })
-      .catch((error) => {
-        setState({...state, messageError: error})}
-      )
+    findCountriesAll()
   },[])
 
   useEffect(()=> {
-    const newCountries = state.filterCountry.filter(country => 
-      verifyStartsWithSameLetter(country.name, state.searchCountry)
-      && verifyStartsWithSameLetter(country.region, state.region)
-    )
-    setState({...state, countries: newCountries})
+    
+    if(state.searchCountry) {
+      findCountriesByAnythings(`https://restcountries.com/v3.1/name/${state.searchCountry}`)
+    }
+
+    if(state.region) {
+      findCountriesByAnythings(`https://restcountries.com/v3.1/region/${state.region}`)
+    }
+    
   },[
     state.region, 
     state.searchCountry

@@ -11,7 +11,8 @@ export type StateProps = {
   countries: CountryModel[];
   searchCountry: string;
   region: string,
-  messageError: ''
+  messageError: '',
+  loading: boolean
 }
 
 function Home() {
@@ -19,44 +20,44 @@ function Home() {
     countries: [],
     searchCountry: '',
     region: '',
-    messageError: ''
+    messageError: '',
+    loading: false
   })
 
-  function findCountriesByAnythings(url: string){
+  function findCountriesByUrl(url: string){
+    setState({...state, loading: true})
     fetch(url)
     .then((data)=> data.json())
     .then((data)=> {
-      const newcontries: CountryModel[] = data?.map(country =>{
+      const newcontries: CountryModel[] = data?.map((country: any) =>{
           return {
             ...country,
             name: country.name.common,
-            region: country.continents+'',
-            flags: country.flags
+            region: country.continents as string,
+            flags: country.flags,
+            alpha3Code: country.ccn3,
           }   
       })
-      setState({ ...state, countries: newcontries})
+      setState({ ...state, countries: newcontries, loading: false})
+      
     })
     .catch((error) => {
-      setState({...state, messageError: error})}
+      setState({...state, messageError: error, loading: false})}
     )
-  }
-
-  function findCountriesAll(): void{
-    findCountriesByAnythings('https://restcountries.com/v3.1/all')
   }
   
   useEffect(()=> {
-    findCountriesAll()
+    findCountriesByUrl('https://restcountries.com/v3.1/all')
   },[])
 
   useEffect(()=> {
     
     if(state.searchCountry) {
-      findCountriesByAnythings(`https://restcountries.com/v3.1/name/${state.searchCountry}`)
+      findCountriesByUrl(`https://restcountries.com/v3.1/name/${state.searchCountry}`)
     }
 
     if(state.region) {
-      findCountriesByAnythings(`https://restcountries.com/v3.1/region/${state.region}`)
+      findCountriesByUrl(`https://restcountries.com/v3.1/region/${state.region}`)
     }
     
   },[
@@ -74,15 +75,11 @@ function Home() {
      />
 
       <div className={styles.countryContainer}>
-          {
-            state.messageError ? 
-              <Error />
-            : (
-              state.countries.length !== 0 ? state.countries.map(data => 
-              <Country key={data.alpha3Code} country={data}/>
-              ) 
-              : <NotFound />
-            )
+          {state.loading && (<div className={styles.loading}>Aguardar ...</div>)}
+          {state.messageError && <Error />}
+          {!state.loading && state.countries.length === 0 && <NotFound />}
+          {!state.loading && !state.messageError && state.countries.length !== 0 && 
+            state.countries.map((data, index) => <Country key={index} country={data}/>) 
           }
       </div>
     </div>

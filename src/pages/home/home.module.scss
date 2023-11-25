@@ -11,5 +11,12 @@
         display: grid;
         justify-content: center;
         grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+
+        .loading{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
     }
 }

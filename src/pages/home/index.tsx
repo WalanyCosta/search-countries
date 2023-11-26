@@ -6,6 +6,7 @@ import Filter from '../../components/filter'
 import Error from '../../components/error'
 import Header from '../../components/header'
 import { CountryModel } from '../../model/country-model'
+import { map } from '../../utils/map'
 
 export type StateProps = {
   countries: CountryModel[];
@@ -30,13 +31,7 @@ function Home() {
     .then((data)=> data.json())
     .then((data)=> {
       const newcontries: CountryModel[] = data?.map((country: any) =>{
-          return {
-            ...country,
-            name: country.name.common,
-            region: country.continents as string,
-            flags: country.flags,
-            alpha3Code: country.ccn3,
-          }   
+          return map(country)
       })
       setState({ ...state, countries: newcontries, loading: false})
       

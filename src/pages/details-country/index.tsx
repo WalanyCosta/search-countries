@@ -5,16 +5,19 @@ import { Link, useParams } from 'react-router-dom'
 import { CountryModel } from '../../model/country-model'
 import Detail from './components/detail/detail'
 import './details-country.module.scss'
+import { map } from '../../utils/map'
 
 function DetailsCountry() {
     const params = useParams()
     const [country, setCountry] = useState<CountryModel | null>(null)
     const [border, setBorder] = useState<string | null>(null)
+
     useEffect(()=> {
-      fetch(`http://localhost:3000/countries?alpha3Code=${border ? border : params.alpha3Code}`)
+      fetch(`https://restcountries.com/v3.1/alpha/${border ? border : params.alpha3Code}`)
       .then(data => data.json())
-      .then(data => {
-        setCountry(data[0])
+      .then(([data]) => {
+        const newCountry = map(data)
+        setCountry(newCountry)
       }).catch(error=> console.log(error))
     }, [border])
 

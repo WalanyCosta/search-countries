@@ -9,8 +9,6 @@ type Props = {
 }
 
 function Detail({country, setBorder}: Props) {
- let comma
-
   return (
     <div className={styles.detailsContainer}>
     <img src={country?.flags.png} />
@@ -46,29 +44,11 @@ function Detail({country, setBorder}: Props) {
             </li>
             <li>
               <strong>currencies:</strong>
-              
-              {country?.currencies && country?.currencies.map(currency => {
-                comma = country.currencies.indexOf(currency) !== 0 ? ',' : ''
-                return (
-                  <>
-                  {comma}
-                  <p key={currency.name}>{currency.name}</p>
-                  </>
-                )
-              })}
-              
+              <p >{country?.currencies}</p> 
             </li>
             <li>
               <strong>Languages:</strong>
-              {country?.languages && country?.languages.map(language => {
-                comma = country.languages.indexOf(language) !== 0 ? ',' : ''
-                return (
-                  <>
-                    {comma}
-                    <p key={language.name}>{language.name}</p>
-                  </>
-                  )
-              })}
+              <p>{country?.languages}</p>   
             </li>
           </ul>
       </div>

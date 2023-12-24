@@ -1,4 +1,4 @@
-@import './color-styles.scss';
+@import './variables-styles.scss';
 
 *{
     margin: 0;
@@ -14,7 +14,7 @@ html{
 
 body{
     background-color: $light-gray;
-    font-family: 'Nunito Sans', sans-serif;
+    font-family: $f-family;
     overflow-x: hidden;
 }
 

@@ -13,8 +13,7 @@ a{
     box-shadow: 1px 1px 2px 1px #00000062;
     text-align: center;
     text-decoration: none;
-    color: $dark-blueText;
-    background-color: $white;
+    background-color: var(--white);
 }
 
 @media (max-width: 1198px) {

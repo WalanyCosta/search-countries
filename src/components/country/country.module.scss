@@ -4,10 +4,11 @@
     width: 280px;
     display: flex;
     flex-direction: column;
-    background-color: $white;
+    background-color: var(--white);
     padding-bottom: 16px;
     border-radius: 8px;
     box-shadow: 1px 1px 2px 1px #00000011;
+
     
     cursor: pointer;
 
@@ -20,6 +21,7 @@
     padding: 24px 20px;
 
     h3{
+        font-size: 20px;
         margin-bottom: 16px;
         font-weight: 800;
     }
@@ -27,11 +29,8 @@
     ul{
         li{
             margin-bottom: 8px;
-            color: $dark-gray;
-
             span{
                 text-transform: capitalize;
-                color: $dark-blueText;
                 font-weight: 600;
                 margin-right: 6px;
             }

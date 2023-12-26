@@ -1,6 +1,5 @@
 import DetailsCountry from './pages/details-country';
 import Home from './pages/home/index'
-import './styles/global-styles.scss'
 import {
   createBrowserRouter,
   RouterProvider,

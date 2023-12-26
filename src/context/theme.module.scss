@@ -1,0 +1,30 @@
+main{
+    color: var(--dark-blueText);
+    background-color: var(--light-gray);
+    min-height: 100vh;
+}
+
+
+.darkTheme{
+    --white: hsl(207, 26%, 17%);
+    --dark-blueText: hsl(0, 0%, 100%);
+    --light-gray: hsla(209, 26%, 17%, 0.952);
+
+    a{
+        color: var(--dark-blueText)
+    }
+
+    .SelectContent {
+        background-color: var(--white);
+        
+        
+        .SelectItem {
+          color: var(--dark-blueText);
+          
+          &[data-highlighted] {
+            background-color: var(--violet);
+            color: var(--violet-light);
+          }
+        }
+    }
+}

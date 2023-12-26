@@ -9,13 +9,9 @@
     margin-top: 128px;
     gap: 24px;
 
-    p{
-        color: dark-blueText
-    }
-
     button{
         padding: 12px 32px;
-        background: $white;
+        background: var(--white);
         border-radius: 4px;
         border: none;
         box-shadow: 2px 2px .5px .5px #00000010;

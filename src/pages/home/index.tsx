@@ -13,7 +13,7 @@ export type StateProps = {
   searchCountry: string;
   region: string,
   messageError: '',
-  loading: boolean
+  loading: boolean,
 }
 
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
     searchCountry: '',
     region: '',
     messageError: '',
-    loading: false
+    loading: false,
   })
 
   function findCountriesByUrl(url: string){
@@ -61,23 +61,23 @@ function Home() {
   ])
 
   return (
-    <div className={styles.homeContainer}>
-     <Header />
+      <div className={styles.homeContainer}>
+      <Header />
 
-     <Filter
-        state={state}
-        setState={setState} 
-     />
+      <Filter
+          state={state}
+          setState={setState} 
+      />
 
-      <div className={styles.countryContainer}>
-          {state.loading && (<div className={styles.loading}>Aguardar ...</div>)}
-          {state.messageError && <Error />}
-          {!state.loading && state.countries.length === 0 && <NotFound />}
-          {!state.loading && !state.messageError && state.countries.length !== 0 && 
-            state.countries.map((data, index) => <Country key={index} country={data}/>) 
-          }
+        <div className={styles.countryContainer}>
+            {state.loading && (<div className={styles.loading}>Aguardar ...</div>)}
+            {state.messageError && <Error />}
+            {!state.loading && state.countries.length === 0 && <NotFound />}
+            {!state.loading && !state.messageError && state.countries.length !== 0 && 
+              state.countries.map((data, index) => <Country key={index} country={data}/>) 
+            }
+        </div>
       </div>
-    </div>
   )
 }
 

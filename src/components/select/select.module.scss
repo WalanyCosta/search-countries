@@ -15,8 +15,8 @@ button {
   font-size: 14px;
   line-height: 1;
   gap: 5px;
-  background-color: $white;
-  color: $dark-blueText;
+  background-color: var(--white);
+  color: var(--dark-blueText);
   box-shadow: 2px 2px .5px .5px #00000010;
 
   &:hover {
@@ -27,7 +27,7 @@ button {
     box-shadow: 0 0 0 2px black;
   }
   &[data-placeholder] {
-    color: $dark-gray;
+    color: var(--dark-gray);
   }
 
   .SelectIcon {
@@ -42,7 +42,7 @@ button {
 
 .SelectContent {
   overflow: hidden;
-  background-color: $white;
+  background-color: var(--white);
   border-radius: 6px;
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
 
@@ -53,7 +53,7 @@ button {
   .SelectItem {
     font-size: 16px;
     line-height: 1;
-    color: $dark-blueText;
+    color: var(--dark-blueText);
     border-radius: 3px;
     display: flex;
     align-items: center;
@@ -64,8 +64,8 @@ button {
     
     &[data-highlighted] {
       outline: none;
-      background-color: $violet;
-      color: $violet-light;
+      background-color: var(--violet);
+      color: var(--violet-light);
     }
   }
 }

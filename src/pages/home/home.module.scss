@@ -2,7 +2,8 @@
 
 .homeContainer{
     width: min(1440px, 100%);
-
+    font-size: $fs-home;
+    
     .countryContainer{
         margin-inline: 64px;
         display: grid;
@@ -20,3 +21,5 @@
         }
     }
 }
+
+

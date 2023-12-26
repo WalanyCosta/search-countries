@@ -17,11 +17,10 @@ function Filter({state, setState}: Props) {
         />
 
         <input
-            type="search"
-            id="search"
+            type="text"
             placeholder='Search for a country'
             onChange={(e)=> 
-                setState({...state, searchCountry:e.target.value})
+                setState({...state, searchCountry: e.target.value})
             } 
         />
         </label>

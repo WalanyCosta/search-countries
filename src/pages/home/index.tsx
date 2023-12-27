@@ -30,11 +30,15 @@ function Home() {
     fetch(url)
     .then((data)=> data.json())
     .then((data)=> {
-      const newcontries: CountryModel[] = data?.map((country: any) =>{
-          return map(country)
-      })
-      setState({ ...state, countries: newcontries, loading: false})
+      let newCountries: CountryModel[] = []
       
+      if(data.status !== 404){
+        newCountries = data?.map((country: any) =>{
+            return map(country)
+        })
+      }
+
+      setState({ ...state, countries: newCountries, loading: false})
     })
     .catch((error) => {
       setState({...state, messageError: error, loading: false})}
@@ -70,12 +74,12 @@ function Home() {
       />
 
         <div className={styles.countryContainer}>
-            {state.loading && (<div className={styles.loading}>Aguardar ...</div>)}
-            {state.messageError && <Error />}
+            {!state.messageError && state.loading && (<div className={styles.loading}>Aguardar ...</div>)}
             {!state.loading && state.countries.length === 0 && <NotFound />}
             {!state.loading && !state.messageError && state.countries.length !== 0 && 
               state.countries.map((data, index) => <Country key={index} country={data}/>) 
             }
+            {state.messageError && <Error />}
         </div>
       </div>
   )

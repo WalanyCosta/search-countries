@@ -16,7 +16,8 @@
     "@radix-ui/react-select": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.18.0",
+    "vercel": "^33.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -38,7 +38,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://www.frontendmentor.io/solutions/web-application-using-react-js-Rg2oxqUrA4)
+- Solution URL: [FrontendMentor](https://www.frontendmentor.io/solutions/web-application-using-react-js-Rg2oxqUrA4)
 - Live Site URL: [search by favorite countries](https://search-countries-delta.vercel.app/)
 
 ## My process
